@@ -1,5 +1,5 @@
 Feature: login feature
 
-  Scenario: Login to Admin
+  Scenario: Logout feature
 
     Given Admin user logouts with valid credentials
