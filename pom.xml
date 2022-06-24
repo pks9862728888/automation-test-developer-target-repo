@@ -61,11 +61,120 @@
         </dependency>
     </dependencies>
 
+    <profiles>
+        <profile>
+            <id>runIntegrationTests</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.trivago.rta</groupId>
+                        <artifactId>cucable-plugin</artifactId>
+                        <version>1.9.0</version>
+                        <executions>
+                            <execution>
+                                <id>generate-test-resources</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>parallel</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <sourceRunnerTemplateFile>src/test/resources/parallel/cucable.template</sourceRunnerTemplateFile>
+                            <sourceFeatures>features</sourceFeatures>
+                            <generatedFeatureDirectory>src/test/resources/parallel/features</generatedFeatureDirectory>
+                            <generatedRunnerDirectory>src/test/java/parallel/runners</generatedRunnerDirectory>
+                            <numberOfTestRuns>1</numberOfTestRuns>
+                            <logLevel>compact</logLevel>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <configuration>
+                            <goal>integration-test</goal>
+                            <failIfNoTests>false</failIfNoTests>
+                            <forkCount>1.5C</forkCount>
+                            <printSummary>true</printSummary>
+                            <disableXmlReport>true</disableXmlReport>
+                            <testFailureIgnore>false</testFailureIgnore>
+                            <reuseForks>true</reuseForks>
+                            <parallel>classesAndMethods</parallel>
+                            <useUnlimitedThreads>true</useUnlimitedThreads>
+                            <includes>**/parallel/runners/*IT.java</includes>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.trivago.rta</groupId>
+                        <artifactId>cluecumber-report-plugin</artifactId>
+                        <version>2.8.0</version>
+                        <executions>
+                            <execution>
+                                <id>report</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>reporting</goal>
+                                </goals>
+                                <configuration>
+                                    <sourceJsonReportDirectory>${project.basedir}/results</sourceJsonReportDirectory>
+                                    <generatedHtmlReportDirectory>${project.basedir}/results/cucumber-html-reports/</generatedHtmlReportDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-clean</id>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                        <configuration>
+                            <filesets>
+                                <fileset>
+                                    <directory>${project.basedir}/results</directory>
+                                    <includes>
+                                        <include>**/*</include>
+                                    </includes>
+                                    <excludes>
+                                        <exclude>**/.gitkeep</exclude>
+                                    </excludes>
+                                </fileset>
+                                <fileset>
+                                    <directory>${project.basedir}/src/test/resources/parallel/features</directory>
+                                    <includes>
+                                        <include>*.feature</include>
+                                    </includes>
+                                    <excludes>
+                                        <exclude>.gitkeep</exclude>
+                                    </excludes>
+                                </fileset>
+                                <fileset>
+                                    <directory>${project.basedir}/src/test/java/parallel/runners</directory>
+                                    <includes>
+                                        <include>*.java</include>
+                                    </includes>
+                                    <excludes>
+                                        <exclude>.gitkeep</exclude>
+                                    </excludes>
+                                </fileset>
+                            </filesets>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
         <resources>
