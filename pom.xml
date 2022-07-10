@@ -162,7 +162,7 @@
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-maven-plugin</artifactId>
                         <configuration>
-                            <mainClass>com.helper.testgenerator.TestGeneratorHelperMainRepo</mainClass>
+                            <mainClass>com.helper.testgenerator.TestGeneratorHelperMainRepoApp</mainClass>
                         </configuration>
                     </plugin>
                 </plugins>

@@ -11,9 +11,9 @@ import org.springframework.context.annotation.FilterType;
 }, excludeFilters = {
         @ComponentScan.Filter(type=FilterType.REGEX, pattern="com.demo.automationtestdevelopertargetrepo.*")
 })
-public class TestGeneratorHelperMainRepo {
+public class TestGeneratorHelperMainRepoApp {
 
     public static void main(String[] args) {
-        SpringApplication.run(TestGeneratorHelperMainRepo.class);
+        SpringApplication.run(TestGeneratorHelperMainRepoApp.class);
     }
 }
