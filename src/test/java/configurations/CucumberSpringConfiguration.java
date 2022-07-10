@@ -1,6 +1,6 @@
 package configurations;
 
-import com.example.cucumberspringdemo.DemoApplication;
+import com.demo.automationtestdevelopertargetrepo.DemoApplication;
 import io.cucumber.spring.CucumberContextConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 

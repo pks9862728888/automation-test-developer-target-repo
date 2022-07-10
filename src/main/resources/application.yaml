@@ -1,0 +1,10 @@
+env: default
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+
+logging:
+  level:
+    com.demo: DEBUG
+    steps: DEBUG

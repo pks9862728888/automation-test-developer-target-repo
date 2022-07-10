@@ -8,15 +8,16 @@
         <version>2.3.7.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.example</groupId>
-    <artifactId>cucumber-spring-demo</artifactId>
+    <groupId>com.demo</groupId>
+    <artifactId>automation-test-developer-target-repo</artifactId>
     <version>0.1.0</version>
-    <name>cucumber-spring-demo</name>
+    <name>automation-test-developer-target-repo</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
         <java.version>11</java.version>
         <cucumber.version>7.3.3</cucumber.version>
+        <lombok.version>1.18.22</lombok.version>
     </properties>
 
     <dependencies>
@@ -49,6 +50,11 @@
             <artifactId>cucumber-java</artifactId>
             <version>${cucumber.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

@@ -1,4 +1,4 @@
-package com.example.cucumberspringdemo;
+package com.demo.automationtestdevelopertargetrepo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
