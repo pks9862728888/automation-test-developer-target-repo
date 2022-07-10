@@ -3,6 +3,12 @@ Demo project containing boilerplate code to run cucumber integration tests havin
 
 > To run integration tests execute in terminal: `mvn clean verify -PrunIntegrationTests`
 
+> To run specific test:
+> 
+> Create a file with name TempTestRunnerIT in parallel.runners folder
+> 
+> mvn verify -PrunSpecificTest
+
 Output will be generated in the `results` folder.
 
 # Architecture
