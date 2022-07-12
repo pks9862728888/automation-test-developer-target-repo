@@ -3,6 +3,10 @@ Demo project containing boilerplate code to run cucumber integration tests havin
 
 > To run integration tests execute in terminal: `mvn clean verify -PrunIntegrationTests`
 
+> To build helper controller jar:
+> 
+> mvn install -PbuildTestGeneratorHelperControllerJar
+
 > To run specific test:
 > 
 > Create a file with name TempTestRunnerIT in parallel.runners folder
