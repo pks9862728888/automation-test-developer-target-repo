@@ -1,7 +1,7 @@
 env: default
 
 server:
-  port: 8085
+  port: 9000
 
 spring:
   main:
@@ -9,5 +9,6 @@ spring:
 
 logging:
   level:
-    com.demo: DEBUG
+    com:
+      demo: DEBUG
     steps: DEBUG

@@ -5,6 +5,7 @@ import com.helper.testgenerator.dao.TestRunnerTemplateDAO;
 import com.helper.testgenerator.enums.EnumClassNameRegister;
 import com.helper.testgenerator.exceptions.EnumNotFoundException;
 import com.helper.testgenerator.template.CucumberTestRunnerTemplate;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +15,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/main")
+@Slf4j
 public class TestRunnerController extends GenericErrorController {
 
     @Autowired
@@ -33,6 +38,7 @@ public class TestRunnerController extends GenericErrorController {
 
     @GetMapping("/getTestRunnerTemplate")
     public ResponseEntity<TestRunnerTemplateDAO> getTemplateCode(@RequestParam("feature-file-path") String featureFilePath) {
+        log.debug("Requested test runner template...");
         return new ResponseEntity<>(
                 TestRunnerTemplateDAO.builder()
                         .data(cucumberTestRunnerTemplate.generateTestRunnerFileCode(featureFilePath))
@@ -44,6 +50,7 @@ public class TestRunnerController extends GenericErrorController {
 
     @GetMapping("/getEnumValues")
     public ResponseEntity<Map<String, List<String>>> getEnumValues() throws EnumNotFoundException {
+        log.debug("Requested all trade enum values...");
         Map<String, List<String>> map = new HashMap<>();
         for (EnumClassNameRegister register : EnumClassNameRegister.values()) {
             List<String> enumFields = new ArrayList<>();
@@ -64,6 +71,7 @@ public class TestRunnerController extends GenericErrorController {
 
     @GetMapping("/getTradeEvents")
     public ResponseEntity<Map<String, List<String>>> getTradeEventsGroupedBySourceSystem() {
+        log.debug("Requested all trade events...");
         Map<String, List<String>> map = new HashMap<>();
         for (TradeEventEnum eventEnum : TradeEventEnum.values()) {
             eventEnum.getSourceSystems()
