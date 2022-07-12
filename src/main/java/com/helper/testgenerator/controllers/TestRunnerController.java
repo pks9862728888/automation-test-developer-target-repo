@@ -1,7 +1,6 @@
 package com.helper.testgenerator.controllers;
 
 import com.demo.automationtestdevelopertargetrepo.enums.fields.TradeEventEnum;
-import com.demo.automationtestdevelopertargetrepo.models.testdatainputmodels.TradeEvent;
 import com.helper.testgenerator.dao.TestRunnerTemplateDAO;
 import com.helper.testgenerator.enums.EnumClassNameRegister;
 import com.helper.testgenerator.exceptions.EnumNotFoundException;
@@ -9,7 +8,10 @@ import com.helper.testgenerator.template.CucumberTestRunnerTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -41,11 +43,11 @@ public class TestRunnerController extends GenericErrorController {
     }
 
     @GetMapping("/getEnumValues")
-    public ResponseEntity<Map<String, Set<String>>> getEnumValues() throws EnumNotFoundException {
-        Map<String, Set<String>> map = new HashMap<>();
-        for (EnumClassNameRegister register: EnumClassNameRegister.values()) {
-            Set<String> enumFields = new HashSet<>();
-            for (Field field: register.getEnumClazz().getDeclaredFields()) {
+    public ResponseEntity<Map<String, List<String>>> getEnumValues() throws EnumNotFoundException {
+        Map<String, List<String>> map = new HashMap<>();
+        for (EnumClassNameRegister register : EnumClassNameRegister.values()) {
+            List<String> enumFields = new ArrayList<>();
+            for (Field field : register.getEnumClazz().getDeclaredFields()) {
                 // Only add the enum fields
                 if (field.getType().getSimpleName().equals(register.getEnumClazz().getSimpleName())) {
                     enumFields.add(field.getName());
@@ -61,17 +63,17 @@ public class TestRunnerController extends GenericErrorController {
     }
 
     @GetMapping("/getTradeEvents")
-    public ResponseEntity<Map<String, Set<String>>> getTradeEventsGroupedBySourceSystem() {
-        Map<String, Set<String>> map = new HashMap<>();
-        for (TradeEventEnum eventEnum: TradeEventEnum.values()) {
+    public ResponseEntity<Map<String, List<String>>> getTradeEventsGroupedBySourceSystem() {
+        Map<String, List<String>> map = new HashMap<>();
+        for (TradeEventEnum eventEnum : TradeEventEnum.values()) {
             eventEnum.getSourceSystems()
                     .forEach(ss -> {
                         if (map.containsKey(ss.name())) {
                             map.get(ss.name()).add(eventEnum.name());
                         } else {
-                            HashSet<String> hs = new HashSet<>();
-                            hs.add(eventEnum.name());
-                            map.put(ss.name(), hs);
+                            ArrayList<String> list = new ArrayList<>();
+                            list.add(eventEnum.name());
+                            map.put(ss.name(), list);
                         }
                     });
         }
