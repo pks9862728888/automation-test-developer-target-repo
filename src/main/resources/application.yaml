@@ -11,4 +11,5 @@ logging:
   level:
     com:
       demo: DEBUG
+      helper: DEBUG
     steps: DEBUG

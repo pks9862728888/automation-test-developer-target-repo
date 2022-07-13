@@ -1,9 +1,9 @@
 package com.demo.automationtestdevelopertargetrepo.enums.inputparsers;
 
-import com.demo.automationtestdevelopertargetrepo.models.testdatainputmodels.KafkaTradeInput;
+import com.demo.automationtestdevelopertargetrepo.models.testdatainputmodels.KafkaTradeMessageInput;
 
 public enum InputTypeEnum implements ModelClassName {
-    KAFKA_TRADE_INPUT(KafkaTradeInput.class),
+    KAFKA_TRADE_INPUT(KafkaTradeMessageInput.class),
     NO_INPUT(null);
 
     private final Class<?> clazz;

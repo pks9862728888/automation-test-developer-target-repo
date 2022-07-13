@@ -1,9 +1,13 @@
 package com.helper.testgenerator.controllers;
 
 import com.demo.automationtestdevelopertargetrepo.enums.fields.TradeEventEnum;
+import com.demo.automationtestdevelopertargetrepo.enums.inputparsers.InputTypeEnum;
+import com.demo.automationtestdevelopertargetrepo.enums.inputparsers.VerificationTypeEnum;
+import com.helper.testgenerator.dao.NodeModelFieldDAO;
 import com.helper.testgenerator.dao.TestRunnerTemplateDAO;
 import com.helper.testgenerator.enums.EnumClassNameRegister;
 import com.helper.testgenerator.exceptions.EnumNotFoundException;
+import com.helper.testgenerator.services.ModelFieldExtractorService;
 import com.helper.testgenerator.template.CucumberTestRunnerTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +30,10 @@ import java.util.Map;
 public class TestRunnerController extends GenericErrorController {
 
     @Autowired
-    public CucumberTestRunnerTemplate cucumberTestRunnerTemplate;
+    private CucumberTestRunnerTemplate cucumberTestRunnerTemplate;
+
+    @Autowired
+    private ModelFieldExtractorService modelFieldExtractorService;
 
     @GetMapping("/")
     public ResponseEntity<String> getStatus() {
@@ -89,4 +96,23 @@ public class TestRunnerController extends GenericErrorController {
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
+    @GetMapping("/getNodeModelFields")
+    public ResponseEntity<List<NodeModelFieldDAO>> getModelFields() {
+        List<NodeModelFieldDAO> modelFields = new ArrayList<>();
+
+        // Add input model fields
+        for (InputTypeEnum inputType: InputTypeEnum.values()) {
+            modelFields.addAll(modelFieldExtractorService.getInputModelFields(
+                    inputType.name(), inputType.getClassName()));
+        }
+
+        // Add verification model fields
+        for (VerificationTypeEnum verificationType: VerificationTypeEnum.values()) {
+            modelFields.addAll(modelFieldExtractorService.getVerificationModelFields(
+                    verificationType.name(), verificationType.getEnumClazzz()
+            ));
+        }
+
+        return new ResponseEntity<>(modelFields, HttpStatus.OK);
+    }
 }

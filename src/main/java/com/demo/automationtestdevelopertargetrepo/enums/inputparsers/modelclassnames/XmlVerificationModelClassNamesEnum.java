@@ -1,7 +1,7 @@
 package com.demo.automationtestdevelopertargetrepo.enums.inputparsers.modelclassnames;
 
 import com.demo.automationtestdevelopertargetrepo.enums.inputparsers.ModelClassName;
-import com.demo.automationtestdevelopertargetrepo.models.testdatainputmodels.XmlVerificationModel;
+import com.demo.automationtestdevelopertargetrepo.models.verificationmodels.XmlVerificationModel;
 
 public enum XmlVerificationModelClassNamesEnum implements ModelClassName {
     XmlVerificationModel(XmlVerificationModel.class);

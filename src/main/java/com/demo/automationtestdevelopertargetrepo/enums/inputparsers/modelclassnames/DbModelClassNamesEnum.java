@@ -1,7 +1,7 @@
 package com.demo.automationtestdevelopertargetrepo.enums.inputparsers.modelclassnames;
 
 import com.demo.automationtestdevelopertargetrepo.enums.inputparsers.ModelClassName;
-import com.demo.automationtestdevelopertargetrepo.models.testdatainputmodels.TradeEvent;
+import com.demo.automationtestdevelopertargetrepo.models.verificationmodels.TradeEvent;
 
 public enum DbModelClassNamesEnum implements ModelClassName {
     TradeEvent(TradeEvent.class);

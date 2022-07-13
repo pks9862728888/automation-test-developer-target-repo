@@ -7,7 +7,9 @@ import org.springframework.context.annotation.FilterType;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {
-        "com.helper.testgenerator.*"
+        "com.helper.testgenerator.*",
+        "com.demo.automationtestdevelopertargetrepo.enums.*",
+        "com.demo.automationtestdevelopertargetrepo.annotations.*"
 }, excludeFilters = {
         @ComponentScan.Filter(type=FilterType.REGEX, pattern="com.demo.automationtestdevelopertargetrepo.*")
 })
