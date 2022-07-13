@@ -4,7 +4,7 @@ import com.demo.automationtestdevelopertargetrepo.annotations.HideTransientField
 import com.demo.automationtestdevelopertargetrepo.annotations.MandatoryVerificationField;
 import com.demo.automationtestdevelopertargetrepo.annotations.PublishingInputField;
 import com.demo.automationtestdevelopertargetrepo.enums.inputparsers.ModelClassName;
-import com.helper.testgenerator.dao.NodeModelFieldDAO;
+import com.helper.testgenerator.dao.YamlNodeModelFieldDTO;
 import com.helper.testgenerator.enums.FrontendFieldValidators;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -20,8 +20,8 @@ import java.util.List;
 @Slf4j
 public class ModelFieldExtractorService {
 
-    public List<NodeModelFieldDAO> getInputModelFields(@NonNull String nodeType, @Nullable Class<?> modelClass) {
-        List<NodeModelFieldDAO> modelFields = new ArrayList<>();
+    public List<YamlNodeModelFieldDTO> getInputModelFields(@NonNull String nodeType, @Nullable Class<?> modelClass) {
+        List<YamlNodeModelFieldDTO> modelFields = new ArrayList<>();
 
         if (modelClass != null) {
             log.debug("Adding input model fields for class: " + modelClass.getSimpleName());
@@ -41,8 +41,8 @@ public class ModelFieldExtractorService {
     }
 
     private void addInputFieldsToList(Field field, String nodeType, Class<?> modelClass,
-                                      List<NodeModelFieldDAO> modelFields) {
-        NodeModelFieldDAO obj = NodeModelFieldDAO.builder()
+                                      List<YamlNodeModelFieldDTO> modelFields) {
+        YamlNodeModelFieldDTO obj = YamlNodeModelFieldDTO.builder()
                 .fieldName(field.getName())
                 .fieldType(field.getType().getSimpleName())
                 .nodeType(nodeType)
@@ -66,9 +66,9 @@ public class ModelFieldExtractorService {
         modelFields.add(obj);
     }
 
-    public List<NodeModelFieldDAO> getVerificationModelFields(
+    public List<YamlNodeModelFieldDTO> getVerificationModelFields(
             @NonNull String nodeType, @Nullable Class<? extends Enum<? extends ModelClassName>> enumClass) {
-        List<NodeModelFieldDAO> modelFields = new ArrayList<>();
+        List<YamlNodeModelFieldDTO> modelFields = new ArrayList<>();
 
         if (enumClass != null) {
             for (Enum<? extends ModelClassName> enumConstant : enumClass.getEnumConstants()) {
@@ -91,8 +91,8 @@ public class ModelFieldExtractorService {
     }
 
     private void addVerificationFieldsToList(@NonNull Field field, @NonNull String nodeType, @NonNull Class<?> modelClass,
-                                             @NonNull List<NodeModelFieldDAO> modelFields) {
-        NodeModelFieldDAO obj = NodeModelFieldDAO.builder()
+                                             @NonNull List<YamlNodeModelFieldDTO> modelFields) {
+        YamlNodeModelFieldDTO obj = YamlNodeModelFieldDTO.builder()
                 .fieldName(field.getName())
                 .fieldType(field.getType().getSimpleName())
                 .nodeType(nodeType)

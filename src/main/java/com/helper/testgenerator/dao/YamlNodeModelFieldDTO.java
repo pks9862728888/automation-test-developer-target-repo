@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 @Builder
-public class NodeModelFieldDAO {
+public class YamlNodeModelFieldDTO {
 
     private String modelClassName;
     private String nodeType;

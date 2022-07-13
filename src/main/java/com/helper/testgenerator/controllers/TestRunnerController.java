@@ -3,7 +3,7 @@ package com.helper.testgenerator.controllers;
 import com.demo.automationtestdevelopertargetrepo.enums.fields.TradeEventEnum;
 import com.demo.automationtestdevelopertargetrepo.enums.inputparsers.InputTypeEnum;
 import com.demo.automationtestdevelopertargetrepo.enums.inputparsers.VerificationTypeEnum;
-import com.helper.testgenerator.dao.NodeModelFieldDAO;
+import com.helper.testgenerator.dao.YamlNodeModelFieldDTO;
 import com.helper.testgenerator.dao.TestRunnerTemplateDAO;
 import com.helper.testgenerator.enums.EnumClassNameRegister;
 import com.helper.testgenerator.exceptions.EnumNotFoundException;
@@ -96,9 +96,10 @@ public class TestRunnerController extends GenericErrorController {
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
-    @GetMapping("/getNodeModelFields")
-    public ResponseEntity<List<NodeModelFieldDAO>> getModelFields() {
-        List<NodeModelFieldDAO> modelFields = new ArrayList<>();
+    @GetMapping("/getYamlNodeModelFields")
+    public ResponseEntity<List<YamlNodeModelFieldDTO>> getModelFields() {
+        log.debug("Requested all yaml node fields...");
+        List<YamlNodeModelFieldDTO> modelFields = new ArrayList<>();
 
         // Add input model fields
         for (InputTypeEnum inputType: InputTypeEnum.values()) {
