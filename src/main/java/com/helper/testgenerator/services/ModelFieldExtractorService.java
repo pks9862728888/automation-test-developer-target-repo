@@ -15,6 +15,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Slf4j
@@ -22,6 +23,14 @@ public class ModelFieldExtractorService {
 
     public List<YamlNodeModelFieldDTO> getInputModelFields(@NonNull String nodeType, @Nullable Class<?> modelClass) {
         List<YamlNodeModelFieldDTO> modelFields = new ArrayList<>();
+        // type field
+        modelFields.add(YamlNodeModelFieldDTO.builder()
+                .fieldName("type")
+                .fieldType(String.class.getSimpleName())
+                .fieldValidators(List.of(FrontendFieldValidators.REQUIRED))
+                .modelClassName(Objects.nonNull(modelClass) ? modelClass.getSimpleName() : "")
+                .nodeType(nodeType)
+                .build());
 
         if (modelClass != null) {
             log.debug("Adding input model fields for class: " + modelClass.getSimpleName());
@@ -70,10 +79,28 @@ public class ModelFieldExtractorService {
             @NonNull String nodeType, @Nullable Class<? extends Enum<? extends ModelClassName>> enumClass) {
         List<YamlNodeModelFieldDTO> modelFields = new ArrayList<>();
 
+        // Type field
+        modelFields.add(YamlNodeModelFieldDTO.builder()
+                .fieldName("type")
+                .fieldType(String.class.getSimpleName())
+                .fieldValidators(List.of(FrontendFieldValidators.REQUIRED))
+                .modelClassName(Objects.nonNull(enumClass) ? enumClass.getSimpleName() : "")
+                .nodeType(nodeType)
+                .build());
+
         if (enumClass != null) {
             for (Enum<? extends ModelClassName> enumConstant : enumClass.getEnumConstants()) {
                 Class<?> modelClass = ((ModelClassName) enumConstant).getClassName();
                 log.debug("Adding verification model fields for class: " + modelClass.getSimpleName());
+
+                // modelClassName field
+                modelFields.add(YamlNodeModelFieldDTO.builder()
+                        .fieldName("modelClassName")
+                        .fieldType(String.class.getSimpleName())
+                        .fieldValidators(List.of(FrontendFieldValidators.REQUIRED))
+                        .modelClassName(modelClass.getSimpleName())
+                        .nodeType(nodeType)
+                        .build());
 
                 // Super class fields
                 Arrays.stream(modelClass.getSuperclass().getDeclaredFields())
